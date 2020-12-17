@@ -104,6 +104,34 @@ import "./styles.css";
    );
  };
 
+ const MyCheckbox = ({ children, ...props }) => {
+   const [field, meta] = useField({ ...props, type: "checkbox" });
+   return (
+     <div>
+       <label className="checkbox">
+         <input type="checkbox" {...field} {...props} />
+         {children}
+       </label>
+       {meta.touched && meta.error ? (
+         <div className="error">{meta.error}</div>
+       ) : null}
+     </div>
+   );
+ };
+
+const MySelect = ({ label, ...props }) => {
+   const [field, meta] = useField(props);
+   return (
+     <div>
+       <label htmlFor={props.id || props.name}>{label}</label>
+       <select {...field} {...props} />
+       {meta.touched && meta.error ? (
+         <div className="error">{meta.error}</div>
+       ) : null}
+     </div>
+   );
+ };
+ 
 const SignupForm = () => {
    return (
     <Formik
@@ -134,15 +162,24 @@ const SignupForm = () => {
       }}
     >
       <Form>
-        <label htmlFor="firstName">First Name</label>
-        <Field name="firstName" type="text" />
-        <ErrorMessage name="firstName" />
-        <label htmlFor="lastName">Last Name</label>
-        <Field name="lastName" type="text" />
-        <ErrorMessage name="lastName" />
-        <label htmlFor="email">Email Address</label>
-        <Field name="email" type="email" />
-        <ErrorMessage name="email" />
+        <MyTextInput 
+          label="First Name" 
+          name="firstName"
+          type="text"
+          placeholder="Kevin" 
+        />
+        <MyTextInput 
+          label="Last Name"
+          name="lastName"
+          type="text"
+          placeholder="Zhang"
+        />
+        <MyTextInput 
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="kevin@gmail.com"
+        />
         <button type="submit">Submit</button>
       </Form>
     </Formik>

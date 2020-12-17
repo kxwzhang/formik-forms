@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { useFormik, Formik, Field, Form, ErrorMessage } from "formik";
+import { useFormik, Formik, Field, Form, ErrorMessage, useField } from "formik";
 import * as Yup from 'yup';
 import "./styles.css";
 
@@ -103,6 +103,15 @@ const SignupForm = () => {
           .max(20, 'Must be 20 characters or less')
           .required('Required'),
         email: Yup.string().email('Invalid email address').required('Required'),
+        acceptedTerms: Yup.boolean()
+          .required('Required')
+          .oneOf([true], 'You must accept the terms and conditions.'),
+        jobType: Yup.string()
+          .oneOf(
+            ['designer', 'development', 'product', 'other'],
+            'Invalid Job Type'
+          )
+          .required('Required')
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {

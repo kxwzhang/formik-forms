@@ -33,6 +33,7 @@ const SignupForm = () => {
       firstName: "",
       lastName: ""
     },
+    validate,
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
     }
